@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\Auth\LoginController;
 
 /*
 |--------------------------------------------------------------------------
@@ -16,6 +17,14 @@ use App\Http\Controllers\DashboardController;
 
 Route::get('/', [DashboardController::class, 'index']);
 
+Route::get('logout', [LoginController::class, 'logout']);
+
 Route::get('/alban', function () {
     return "sup";
 });
+
+
+
+Auth::routes(['register'=>FALSE]);
+
+//Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
