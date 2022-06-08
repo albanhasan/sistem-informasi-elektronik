@@ -33,11 +33,13 @@
                                             <a href="{{ route('products.edit', $item->id) }}" class="btn btn-primary btn-sm">
                                                 <i class="fa fa-pencil"></i>
                                             </a>
-                                            <form action="{{ route('products.destroy', $item->id) }}" method="post" class="d-inline"></form>
-                                            @method('delete')
-                                            <button class="btn btn-danger btn-sm">
-                                                <i class="fa fa-trash"></i>  
-                                            </button>
+                                            <form action="{{ route('products.destroy', $item->id) }}" method="POST" class="d-inline">
+                                                @method('DELETE')
+                                                @csrf
+                                                <button class="btn btn-danger btn-sm" type="submit">
+                                                    <i class="fa fa-trash"></i>  
+                                                </button>
+                                            </form>
                                         </td>
                                     </tr>
                                     @empty
