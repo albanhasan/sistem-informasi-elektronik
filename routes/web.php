@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\ProductController;
+use App\Http\Controllers\TransactionController;
 
 /*
 |--------------------------------------------------------------------------
@@ -22,12 +23,14 @@ Route::get('logout', [LoginController::class, 'logout']);
 
 Route::resource('products',  ProductController::class);
 
+Route::resource('transactions',  TransactionController::class);
+
 Route::get('/alban', function () {
     return "sup";
 });
 
 
 
-Auth::routes(['register'=>FALSE]);
+Auth::routes(['register'=>TRUE]);
 
 //Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
