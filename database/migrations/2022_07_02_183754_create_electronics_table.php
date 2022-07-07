@@ -3,12 +3,9 @@
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
+use App\Models\Models\Category;
 
-use App\Models\User;
-use App\Models\Models\Electronic;
-
-
-class CreateTransactionsTable extends Migration
+class CreateElectronicsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -17,13 +14,15 @@ class CreateTransactionsTable extends Migration
      */
     public function up()
     {
-        Schema::create('transactions', function (Blueprint $table) {
+        Schema::create('electronics', function (Blueprint $table) {
             $table->bigincrements('id');
-            $table->foreignIdFor(User::class);
-            $table->foreignIdFor(Electronic::class);
-            $table->integer('jumlah_item');
-            $table->integer('total_harga');
-            $table->string('transaction_status');
+            $table->string('name');
+            $table->string('slug');
+            $table->foreignIdFor(Category::class);
+            $table->longtext('description');
+            $table->integer('price');
+            $table->integer('stock');
+            $table->string('image_name');
             $table->softDeletes();
             $table->timestamps();
         });
@@ -36,6 +35,6 @@ class CreateTransactionsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('transactions');
+        Schema::dropIfExists('electronics');
     }
 }

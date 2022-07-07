@@ -25,9 +25,11 @@ class TransactionController extends Controller
      */
     public function index()
     {
-        $item = "Products";
+        $items = Transaction::all();
 
-        return var_dump(Str::snake('Transaction'));
+        return view('pages.transactions.index')->with([
+            'items' => $items
+        ]);
     }
 
     /**
@@ -46,9 +48,11 @@ class TransactionController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(Request $request, $id)
     {
-        //
+        $data = $request->all();
+
+        return view('pages.transactions.buy');
     }
 
     /**
@@ -59,7 +63,11 @@ class TransactionController extends Controller
      */
     public function show($id)
     {
-        //
+        $item = Transaction::with(Transaction::detail)->findOrFail($id);
+
+        return view('pages.transactions.show')->with([
+            'item' => $item
+        ]);
     }
 
     /**
@@ -92,6 +100,18 @@ class TransactionController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function destroy($id)
+    {
+        //
+    }
+
+    /**
+     * buy the specified resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function buy(Request $request, $id)
     {
         //
     }

@@ -22,7 +22,7 @@
 <body>
     <!-- Left Panel -->
     <!-- SIDEBAR -->
-    @include('includes.sidebar')
+    @include('includes.sidebar') 
     <!-- /#left-panel -->
     <!-- Right Panel -->
     <div id="right-panel" class="right-panel">
@@ -46,6 +46,8 @@
                         </div>
                         <div class="col-sm-6 text-right">
                             Designed by <a href="https://colorlib.com">Colorlib</a>
+                        
+                        
                         </div>
                     </div>
                 </div>

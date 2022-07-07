@@ -2,15 +2,15 @@
 @section('content')
     <div class="card">
         <div class="card-header">
-            <strong>Ubah Barang</strong>
+            <strong>Ubah Electronic</strong>
             <small>{{ $item->name }}</small>
         </div>
         <div class="card-body card-block">
-            <form action="{{ route("products.update", $item->id) }}" method="POST">
+            <form action="{{ route("electronic.update", $item->id) }}" method="POST" enctype="multipart/form-data"> 
                 @method('PUT')
                 @csrf
                 <div class="form-group">
-                    <label for="name" class="form-control-label">Nama Barang</label>
+                    <label for="name" class="form-control-label">Nama Electronic</label>
                     <input type="text" name="name" value="{{ old('name') ? old('name') : $item->name }} " class="form-control" 
                         @error('name')
                             is-invalid
@@ -20,10 +20,17 @@
                 </div>
                 <div class="form-group">
                     <label for="name" class="form-control-label">Category</label>
-                    <select name="category_id" value="{{ old('category_id') ? old('category_id') : $item->category_id }}" class="form-control">
+                    <select id="category-select" name="category_id" value="{{ old('category_id') ? old('category_id') : $item->category_id }}" class="form-control">$( document ).ready(function() {
+                        console.log( "ready!" );
+                    });
                         @forelse($categories as $category)
-                            <option value="{{ $category->id }}">{{ $category->name }}</option>
+                        @if ($item->category_id = $category->id)
+                            <option value="{{ $category->id }}" selected>{{ $category->name }}</option>
+                        @else
+                        <option value="{{ $category->id }}">{{ $category->name }}</option>
                         
+                        @endif
+
                         @empty
                         <option values=""></option>
                         @endforelse
@@ -61,11 +68,13 @@
                 </div>
                 <div class="form-group">
                     <label for="name" class="form-control-label">Old Image</label>
-                    <input type="file" class="form-control" required name="image">
+                    <a href="{{ url('public/images/electronic/'.$item->image_name) }}" target="_blank">
+                        <img src="{{ url('public/images/electronic/'.$item->image_name) }}">
+                    </a>
                  </div>
                 <div class="form-group">
                     <label for="name" class="form-control-label">Image</label>
-                    <input type="file" class="form-control" required name="image">
+                    <input type="file" class="form-control" name="image">
                  </div>
                 <div class="form-group">
                     <button class="btn btn-primary btn-block" type="submit">Ubah</button>
@@ -75,3 +84,9 @@
         </div>
     </div>
 @endsection
+
+<script>
+    $( document ).ready(function() {
+        $("#category-select").val($("#category-select").val());
+    });
+ </script>

@@ -5,6 +5,8 @@ use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\TransactionController;
+use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\ElectronicController;
 
 /*
 |--------------------------------------------------------------------------
@@ -23,7 +25,16 @@ Route::get('logout', [LoginController::class, 'logout']);
 
 Route::resource('products',  ProductController::class);
 
+Route::resource('category',  CategoryController::class);
+
+Route::resource('electronic',  ElectronicController::class);
+
+Route::get('electronic.list', [ElectronicController::class, 'list'])->name('/electronic/list');
+
 Route::resource('transactions',  TransactionController::class);
+
+Route::get('transactions.buy', [TransactionController::class, 'buy'])->name('electronic.list');
+
 
 Route::get('/alban', function () {
     return "sup";
