@@ -58,22 +58,24 @@
                                                 class="btn btn-info btn-sm">
                                                 <i class="fa fa-eye"></i>
                                             </a>
-                                            @if($item->transaction_status == 'Waiting Confirmation') 
-                                                <a href="{{ route('transactions.transaction_status', [$item->id, 'confirm']) }}" class="btn btn-primary btn-sm">
-                                                    <i class="fa fa-check"></i>
-                                                </a>
-                                            
-                                                <a href="{{ route('transactions.transaction_status', [$item->id, 'canceled']) }}" class="btn btn-warning btn-sm">
-                                                    <i class="fa fa-ban"></i>
-                                                </a>
+                                            @if(auth()->user()->isAdmin)
+                                                @if($item->transaction_status == 'Waiting Confirmation') 
+                                                    <a href="{{ route('transactions.transaction_status', [$item->id, 'confirm']) }}" class="btn btn-primary btn-sm">
+                                                        <i class="fa fa-check"></i>
+                                                    </a>
+                                                
+                                                    <a href="{{ route('transactions.transaction_status', [$item->id, 'canceled']) }}" class="btn btn-warning btn-sm">
+                                                        <i class="fa fa-ban"></i>
+                                                    </a>
+                                                @endif
+                                                <form action="{{ route('transactions.destroy', $item->id) }}" method="POST" class="d-inline">
+                                                    @method('DELETE')
+                                                    @csrf
+                                                    <button class="btn btn-danger btn-sm" type="submit">
+                                                        <i class="fa fa-trash"></i>  
+                                                    </button>
+                                                </form>
                                             @endif
-                                            <form action="{{ route('transactions.destroy', $item->id) }}" method="POST" class="d-inline">
-                                                @method('DELETE')
-                                                @csrf
-                                                <button class="btn btn-danger btn-sm" type="submit">
-                                                    <i class="fa fa-trash"></i>  
-                                                </button>
-                                            </form>
                                         </td>
                                     </tr>
                                     <?php $no++ ?>
@@ -124,7 +126,7 @@
                                         </thead>
                                         <tbody>
                                             <tr>
-                                                <td id="electronic-description">{{ $item->description}}</td>
+                                                <td id="electronic-description">{!! $item->description !!}</td>
                                                 <td id="electronic-stok">{{ $item->stock}}</td>
                                                 <td id="electronic-price">{{ $item->price}}</td>
                                                 <td id="electronic-category">{{ $item->category}}</td>

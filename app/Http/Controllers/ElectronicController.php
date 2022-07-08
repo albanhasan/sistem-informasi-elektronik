@@ -65,8 +65,14 @@ class ElectronicController extends Controller
     {
         $data = $request->all();
 
-        $data['slug'] = str::slug($request->name);
+        $name = $data['name'];
+        $category = $data['category_id'];
+        $price = $data['price'];
+        $description = $data['description'];
+        $stock = $data['stock'];
 
+       $slug = $data['slug'] = str::slug($request->name);
+        $filename = "";
         if($request->file('image')){
             $file= $request->file('image');
             $filename= date('YmdHi').$file->getClientOriginalName();
@@ -75,7 +81,12 @@ class ElectronicController extends Controller
             $data['image']= $filename;
         }
 
-        Electronic::create($data);
+
+
+        $insert = DB::insert("INSERT INTO electronics (name, slug, category_id,description,price,stock,image_name,
+         created_at, updated_at) 
+        VALUES ('$name', '$slug', $category, '$description', 
+        $price, $stock, '$filename', NOW(), NOW())");
 
         return redirect()->route('electronic.index');
 
@@ -100,7 +111,7 @@ class ElectronicController extends Controller
      */
     public function edit($id)
     {
-        $item = Electronic::findOrFail($id);
+        $item = DB::selectOne("SELECT * FROM electronics WHERE id = $id");
 
         $categories = DB::select("SELECT * FROM category ORDER BY name ASC");
 
@@ -123,7 +134,7 @@ class ElectronicController extends Controller
 
         $data['slug'] = str::slug($request->name);
 
-        $item = Electronic::findOrFail($id);
+        $item = DB::selectOne("SELECT * FROM electronics WHERE id = $id"); $item = Electronic::findOrFail($id);
 
         var_dump($item);
 
@@ -155,7 +166,7 @@ class ElectronicController extends Controller
      */
     public function destroy($id)
     {
-        $item = Electronic::findOrFail($id);
+        $item = DB::selectOne("SELECT * FROM electronics WHERE id = $id");
 
         unlink(public_path('public/images/electronic/'.$item->image_name));
 

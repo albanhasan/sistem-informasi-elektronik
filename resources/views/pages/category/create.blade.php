@@ -2,7 +2,7 @@
 @section('content')
     <div class="card">
         <div class="card-header card-title">
-            Tambah Barang
+            Tambah Category
         </div>
         <div class="card-body card-block">
             <form action="{{ route("category.store") }}" method="POST">

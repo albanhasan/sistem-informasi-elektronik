@@ -26,12 +26,13 @@
                     <li>
                         <a href="{{ route("electronic.create")}}"> <i class="menu-icon fa fa-spinner"></i>Tambah Electronic </a>
                     </li>
+                @endif
 
                     <li class="menu-title text-uppercase">Transaksi</li><!-- /.menu-title -->
                     <li>
                         <a href="{{ route("transactions.index")}}"> <i class="menu-icon fa fa-bars"></i>Lihat Transaksi </a>
                     </li>
-                @endif
+               
 
                
                 {{-- <li>

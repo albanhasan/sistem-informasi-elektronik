@@ -8,6 +8,7 @@ use App\Http\Requests\CategoryRequest;
 
 use Illuminate\Support\Facades\DB;
 
+use Carbon\Carbon;
 
 class CategoryController extends Controller
 {
@@ -43,9 +44,9 @@ class CategoryController extends Controller
     public function store(CategoryRequest $request)
     {
         $data = $request->all();
-
-
-        Category::create($data);
+        $name = $data['name'];
+        $insert = DB::insert("INSERT INTO category (name, created_at, updated_at) 
+            VALUES ('$name' , NOW(), NOW())");
 
         return redirect()->route('category.index');
     }

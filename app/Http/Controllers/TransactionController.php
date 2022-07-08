@@ -42,7 +42,8 @@ class TransactionController extends Controller
             INNER JOIN users u ON t.user_id = u.id
                 WHERE td.transaction_id = t.id AND t.deleted_at IS NULL");
         } else {
-            $transactions = DB::select("SELECT u.name AS full_name, e.name AS electronic_name, c.name AS category, e.*, t.* FROM transactions t
+            $transactions = DB::select("SELECT u.name AS full_name, e.name AS electronic_name, c.name AS category,
+            t.created_at as transaction_date, e.*, t.* FROM transactions t
             INNER JOIN transaction_details td ON t.id = td.transaction_id
             INNER JOIN electronics e ON td.electronic_id = e.id
             INNER JOIN category c ON e.category_id = c.id
