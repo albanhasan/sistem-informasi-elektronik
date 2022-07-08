@@ -39,7 +39,8 @@
                 </div>
                 <div class="form-group">
                     <label for="name" class="form-control-label">Description</label>
-                    <textarea name="description"
+                    
+                    <textarea name="description" id="editor"
                     
                      @error('description')
                         is-invalid
@@ -85,8 +86,12 @@
     </div>
 @endsection
 
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.ckeditor.com/4.19.0/standard/ckeditor.js"></script>
 <script>
     $( document ).ready(function() {
         $("#category-select").val($("#category-select").val());
     });
+
+    ClassicEditor.replace("description"); 
  </script>

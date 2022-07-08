@@ -33,7 +33,10 @@ Route::get('electronic.list', [ElectronicController::class, 'list'])->name('/ele
 
 Route::resource('transactions',  TransactionController::class);
 
-Route::get('transactions.buy', [TransactionController::class, 'buy'])->name('electronic.list');
+Route::get('/transactions/buy/{slug}', [TransactionController::class, 'buy'])->name('transactions.buy');
+
+
+Route::get('/transactions/transaction-status/{id}/{transaction_status}', [TransactionController::class, 'update_transaction_status'])->name('transactions.transaction_status');
 
 
 Route::get('/alban', function () {

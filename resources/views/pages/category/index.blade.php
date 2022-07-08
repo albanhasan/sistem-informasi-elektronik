@@ -6,7 +6,7 @@
             <div class="col-12">
                 <div class="card">
                     <div class="card-body">
-                        <div class="box-title">Daftar Electonic</div>
+                        <div class="box-title">Daftar Category</div>
                     </div>
                     <div class="card-body">
                         <div class="table-stats order-table ov-h">

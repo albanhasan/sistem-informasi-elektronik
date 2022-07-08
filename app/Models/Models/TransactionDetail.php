@@ -11,7 +11,7 @@ class TransactionDetail extends Model
 
     protected $fillable = [
         'transaction_id',
-        'product_id'
+        'electronic_id'
     ];
 
     protected $hidden = [];
@@ -20,7 +20,7 @@ class TransactionDetail extends Model
         return $this->belongsTo(Transaction::class, 'transaction_id','id');
     }
 
-    public function product() {
-        return $this->belongsTo(Products::class, 'product_id','id');
+    public function electronic() {
+        return $this->belongsTo(electronic::class, 'electronic_id','id');
     }
 }

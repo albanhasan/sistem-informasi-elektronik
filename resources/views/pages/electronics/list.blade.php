@@ -11,7 +11,8 @@
                 <h3 class="card-title">Rp {{ $item->price }}</h3>
                 <h5 class="card-title">{{ $item->name }}</h5>
                 <p class="card-text">{{ $item->description }}</p>
-                <a href="{{ route('transactions.store') }}/electronic_id={{}}" class="btn btn-primary">Buy</a>
+                <p class="card-text">Stock : {{ $item->stock }}</p>
+                <a href="{{ route('transactions.buy', $item->slug) }}" class="btn btn-primary">Buy</a>
                 </div>
             </div>
             @empty
