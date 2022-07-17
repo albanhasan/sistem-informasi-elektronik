@@ -9,7 +9,7 @@
             <div class="card-body">
             <h3 class="card-title">Rp {{ $electronic->price }}</h3>
             <h5 class="card-title">{{ $electronic->name }}</h5>
-            <p class="card-text">{{ $electronic->description }}</p>
+            <p class="card-text">{!! $electronic->description !!}</p>
             <p class="card-text">Stock : {{ $electronic->stock }}</p>
             <a href="#" class="btn btn-primary">Buy</a>
             </div>
@@ -33,7 +33,7 @@
                 </div>
                 <div class="form-group">
                     <label for="name" class="form-control-label">Jumlah Electronic</label>
-                    <input type="number" class="jumlah-barang" oninput="setTotalHarga()" name="totalItem" value="{{ old('totalItem') }}" class="form-control" 
+                    <input type="number" class="form-control jumlah-barang" oninput="setTotalHarga()" name="totalItem" value="{{ old('totalItem') }}" 
                         @error('totalItem')
                             is-invalid
                         @enderror
@@ -44,7 +44,7 @@
                 </div>
                 <div class="form-group">
                     <label for="name" class="form-control-label">Total Harga</label>
-                    <input type="number" class="total-harga" value="{{ old('totalHarga') }}"  name="totalHarga" readonly class="form-control"/>
+                    <input type="number" class="form-control total-harga" value="{{ old('totalHarga') }}"  name="totalHarga" readonly/>
                 </div>
                 <div class="form-group">
                     <label for="name" class="form-control-label">Masukan nominal pembayaran</label>
