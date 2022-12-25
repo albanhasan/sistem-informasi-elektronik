@@ -20,17 +20,29 @@ class DashboardController extends Controller
         $user = Auth::user();
         
         if($user->isAdmin) {
-            $countTransactions = DB::selectOne("SELECT count(*) from transactions");
+            $countTransactions = DB::selectOne("SELECT count(*) as count from transactions");
         } else {
-            $countTransactions = DB::selectOne("SELECT count(*) from transactions WHERE user_id = $user->id AND deleted_at IS NULL");
+            $countTransactions = DB::selectOne("SELECT count(*) as count from transactions WHERE user_id = $user->id AND deleted_at IS NULL");
         }
         
-        $countElectronics = DB::selectOne("SELECT count(*) from electronics WHERE deleted_at IS NULL");
+        $countElectronics = DB::selectOne("SELECT count(*) as count from electronics WHERE deleted_at IS NULL");
         
+        // if($countTransactions) {
+        //     $countTransactions = $countTransactions[0]->count;
+        // } else {
+        //     $countTransactions = 0;
+        // }
+
+        // if($countElectronics) {
+        //     $countElectronics = $countElectronics[0]->count;
+        // } else {
+        //     $countElectronics = 0;
+        // }
+
         return view("layouts.default")->with([
             'user' => $user,
-            'countTransactions' => $countTransactions->count,
-            'countElectronics' => $countElectronics->count
+            'countTransactions' => 0,
+            'countElectronics' => 0
         ]);
     }
 }

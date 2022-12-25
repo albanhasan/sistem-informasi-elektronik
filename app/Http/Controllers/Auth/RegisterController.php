@@ -68,13 +68,16 @@ class RegisterController extends Controller
      */
     protected function create(array $data)
     {   
-        $id = DB::selectOne('INSERT INTO users (name, email, password, "isAdmin", created_at,
-            updated_at) values (?, ?, ?, ?, ?, ?) 
-            returning id', [$data['name'], $data['email'],
+        // $id = DB::table('users')->insertGetId(
+        //     ['name' => $data['name'], 'email' => $data['email'], 'password' => Hash::make($data['password']), 'isAdmin' => false, 'created_at' => Carbon::now(), 'updated_at' => Carbon::now()]
+        // );
+        $id = DB::selectOne('INSERT INTO users (name, email, password, isAdmin, created_at,
+            updated_at) values (?, ?, ?, ?, ?, ?)', [$data['name'], $data['email'],
             Hash::make($data['password']), false, Carbon::now(), Carbon::now()]);
 
-        var_dump($id->id);
+        $id = DB::getPdo()->lastInsertId();
 
-        return User::findorFail($id->id);
+
+        return User::findorFail($id);
     }
 }

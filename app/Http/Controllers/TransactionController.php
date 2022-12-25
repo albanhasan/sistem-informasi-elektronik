@@ -84,27 +84,54 @@ class TransactionController extends Controller
                 COUNT(*) as totalCount FROM transaction_details WHERE transaction_id = (SELECT transaction_id FROM transactions WHERE user_id = ".auth()->user()->id."  AND 
                 transaction_status = 'Waiting Confirmation' LIMIT 1) 
                 AND electronic_id = $electronic->id");
-                
-            if($select->totalcount > 0) {
-                $title = "Gagal membuat transaksi baru karena terdapat transaksi yang sedang berjalan untuk produk ini";
-                $message = "Mohon tunggu hingga selesai di konfirmasi";
-            } else {
-                
-                $inserted_transaction_id = DB::selectOne('INSERT INTO transactions (uuid,
-                transaction_total, transaction_status, user_id, total_payment, total_item, created_at,
-                    updated_at) values (?, ?, ?, ?, ?, ?, ?, ?) 
-                    returning id', [$uuid, $electronic->price * $data['totalItem'],
-                'Waiting Confirmation', auth()->user()->id,$data['totalPayment'], $data['totalItem'], Carbon::now(), Carbon::now()]);
-    
-                $inserted_transaction_details_id = DB::selectOne('INSERT INTO transaction_details (transaction_id,
-                electronic_id, created_at,
-                    updated_at) values (?, ?, ?, ?) 
-                    returning id', [$inserted_transaction_id->id,
-                    $electronic->id, Carbon::now(), Carbon::now()]);
+            
+            if($select) {
+                //dd($select->totalCount);
+                if($select->totalCount > 0) {
+                    $title = "Gagal membuat transaksi baru karena terdapat transaksi yang sedang berjalan untuk produk ini";
+                    $message = "Mohon tunggu hingga selesai di konfirmasi";
+                } else {
+                    
 
-                $title = "Pembayaran anda berhasil";
-                $message = "Transaksi anda sedang di konfirmasi";
+                    $inserted_transaction_id = DB::table('transactions')->insertGetId(
+                        [
+                            'uuid'  => $uuid, 
+                            'transaction_total' => $electronic->price * $data['totalItem'],
+                            'transaction_status' => 'Waiting Confirmation',
+                            'user_id' => auth()->user()->id,
+                            'total_payment' => $data['totalPayment'],
+                            'total_item' => $data['totalItem'],
+                            'created_at' => Carbon::now(),
+                            'updated_at' => Carbon::now()
+                        ]
+                    );
+
+                    // $inserted_transaction_id = DB::selectOne('INSERT INTO transactions (uuid,
+                    // transaction_total, transaction_status, user_id, total_payment, total_item, created_at,
+                    //     updated_at) values (?, ?, ?, ?, ?, ?, ?, ?)', [$uuid, $electronic->price * $data['totalItem'],
+                    // 'Waiting Confirmation', auth()->user()->id,$data['totalPayment'], $data['totalItem'], Carbon::now(), Carbon::now()]);
+
+                    // dd($inserted_transaction_id); 
+
+                    $inserted_transaction_details_id = DB::selectOne('INSERT INTO transaction_details (transaction_id,
+                    electronic_id, created_at,
+                        updated_at) values (?, ?, ?, ?)', [$inserted_transaction_id,
+                        $electronic->id, Carbon::now(), Carbon::now()]);
+                    
+                    $inserted_transaction_details_id = DB::table('transaction_details')->insertGetId(
+                        [
+                            'transaction_id'  => $inserted_transaction_id, 
+                            'electronic_id' => $electronic->id,
+                            'created_at' => Carbon::now(),
+                            'updated_at' => Carbon::now()
+                        ]
+                    );
+
+                    $title = "Pembayaran anda berhasil";
+                    $message = "Transaksi anda sedang di konfirmasi";
+                }
             }
+            
         }
 
         
